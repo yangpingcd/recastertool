@@ -109,7 +109,7 @@
 
         function btnSet_onclick() {
             let server = $('#recasterServer').val();
-            let id = $("#recasterID").val()
+            let id = parseInt($("#recasterID").val())
             if (!server || !id) {
                 // todo show error
                 return;
@@ -131,18 +131,18 @@
                 ]
             };
 
-            let name = $('#sinkName1').val();
-            let url = $('#sinkUrl1').val();
-            if (name || url) {
-                requestData.sinks[0] = { "name": name, "url": url };
-                let name = $('#sinkName2').val();
-                let url = $('#sinkUrl2').val();
-                if (name || url) {
-                    requestData.sinks[1] = { "name": name, "url": url };
-                    let name = $('#sinkName3').val();
-                    let url = $('#sinkUrl3').val();
-                    if (name || url) {
-                        requestData.sinks[2] = { "name": name, "url": url };                        
+            let name1 = $('#sinkName1').val();
+            let url1 = $('#sinkUrl1').val();
+            if (name1 || url1) {
+                requestData.sinks[0] = { "name": name1, "url": url1 };
+                let name2 = $('#sinkName2').val();
+                let url2 = $('#sinkUrl2').val();
+                if (name2 || url2) {
+                    requestData.sinks[1] = { "name": name2, "url": url2 };
+                    let name3 = $('#sinkName3').val();
+                    let url3 = $('#sinkUrl3').val();
+                    if (name3 || url3) {
+                        requestData.sinks[2] = { "name": name3, "url": url3 };
                     }
                 }
             }
