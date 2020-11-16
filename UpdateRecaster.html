@@ -117,16 +117,16 @@
 
             let uri = `${server}/api/SocialRecaster/Update`;
             let requestData = {
-                "id": id,
-                "name": $('#recasterName').val(),
-                "source": {
+                id: id,
+                name: $('#recasterName').val(),
+                source: {
                     "name": $('#sourceName').val(),
                     "url": $('#sourceUrl').val(),
                 },
-                "sinks": [
+                sinks: [
                     /*{
-                    "name": "string",
-                    "url": "string"
+                    name: "string",
+                    url: "string"
                     }*/
                 ]
             };
@@ -172,14 +172,17 @@
 
 <body>
     <div id="settings" class="container pt-2">
-        <label>SocialRecaster Server</label>
-        <input type="text" class="form-control" id="recasterServer" placeholder="Enter Server">
-        <hr>
-
-        <!--<div class="row">
+         <!--<div class="row">
             <div class="col-2"></div>
             <div class="col-10"></div>
         </div>-->
+
+        <div class="row">
+            <div class="col-2"><label>SocialRecaster Server</label></div>
+            <div class="col-10"><input type="text" class="form-control" id="recasterServer" placeholder="Enter Server">
+            </div>
+        </div>
+        <hr>
 
         <div class="row">
             <div class="col-2"><label>ID</label></div>
@@ -236,7 +239,8 @@
         <hr>
 
         <div class="row">
-            <div class="col">
+            <div class="col-2"></div>
+            <div class="col-10">
                 <button id="btnGet" type="button" class="btn btn-primary" onclick="btnGet_onclick();">Get</button>
                 <button id="btnSet" type="button" class="btn btn-primary" onclick="btnSet_onclick();">Set</button>
             </div>
