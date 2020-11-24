@@ -167,6 +167,58 @@
             });
         }
 
+        function btnStart_onclick() {
+            let server = $('#recasterServer').val();
+            let id = parseInt($("#recasterID").val())
+            if (!server || !id) {
+                // todo show error
+                return;
+            }
+
+            let uri = `${server}/api/SocialRecaster/Start/${id}`;
+            $.ajax({
+                url: uri,
+                type: "PUT",
+                processData: false,
+                beforeSend: function (xhr) {
+                },
+                success: function (data, status) {
+                    console.log(data);
+                    //console.log(status);
+                },
+                error: function (xhr, desc, err) {
+                    console.log(desc);
+                    console.log(err);
+                }
+            });
+        }
+
+        function btnStop_onclick() {
+            let server = $('#recasterServer').val();
+            let id = parseInt($("#recasterID").val())
+            if (!server || !id) {
+                // todo show error
+                return;
+            }
+
+            let uri = `${server}/api/SocialRecaster/Stop/${id}`;
+            $.ajax({
+                url: uri,
+                type: "PUT",
+                processData: false,
+                beforeSend: function (xhr) {
+                },
+                success: function (data, status) {
+                    console.log(data);
+                    //console.log(status);
+                },
+                error: function (xhr, desc, err) {
+                    console.log(desc);
+                    console.log(err);
+                }
+            });
+        }
+
     </script>
 </head>
 
@@ -243,6 +295,9 @@
             <div class="col-10">
                 <button id="btnGet" type="button" class="btn btn-primary" onclick="btnGet_onclick();">Get</button>
                 <button id="btnSet" type="button" class="btn btn-primary" onclick="btnSet_onclick();">Set</button>
+
+                <button id="btnStart" type="button" class="btn btn-primary" onclick="btnStart_onclick();">Start</button>
+                <button id="btnStop" type="button" class="btn btn-primary" onclick="btnStop_onclick();">Stop</button>
             </div>
         </div>
     </div>
