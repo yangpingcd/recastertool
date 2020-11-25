@@ -99,6 +99,7 @@
                         $('#sinkUrl3').val('');
                     }
 
+                    $('#enabled').val(data.enabled)
                 },
                 error: function (xhr, desc, err) {
                     console.log(desc);
@@ -185,6 +186,7 @@
                 success: function (data, status) {
                     console.log(data);
                     //console.log(status);
+                    $('#enabled').val(data); 
                 },
                 error: function (xhr, desc, err) {
                     console.log(desc);
@@ -211,6 +213,7 @@
                 success: function (data, status) {
                     console.log(data);
                     //console.log(status);
+                    $('#enabled').val(data);
                 },
                 error: function (xhr, desc, err) {
                     console.log(desc);
@@ -287,6 +290,12 @@
         <div class="row">
             <div class="col-2"> <label>Sink URL 3</label></div>
             <div class="col-10"><input type="text" class="form-control" id="sinkUrl3" placeholder=""></div>
+        </div>
+        <hr>
+
+        <div class="row">
+            <div class="col-2"> <label>Enabled</label></div>
+            <div class="col-10"><input type="text" class="form-control" id="enabled" disabled></div>
         </div>
         <hr>
 
