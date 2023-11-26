@@ -69,7 +69,7 @@ class RecasterMan
         return $r
     }
 
-    static [string]_getUrl([string]$pattern, $iSource, $iSink) {        
+    [string]_getUrl([string]$pattern, $iSource, $iSink) {        
         return $pattern.Replace("{0}", $iSource).Replace("{1}", $iSink)
     }
 
@@ -115,7 +115,7 @@ class RecasterMan
         $list = $this.ListLoadTest()
         foreach ($item in $list) {
             $id = $item.id
-            Write-Host "Deleting id=$id}"
+            Write-Host "Deleting id=$id"
             $this.DeleteRecast($id)
         }
     }
