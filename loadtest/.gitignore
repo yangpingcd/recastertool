@@ -1,0 +1,6 @@
+# media & ffmpeg binary folder
+media/
+ffmpeg*/
+
+# bak files
+*.bak
