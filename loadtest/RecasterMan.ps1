@@ -69,24 +69,20 @@ class RecasterMan
         return $r
     }
 
+    static [string]_getUrl([string]$pattern, $iSource, $iSink) {        
+        return $pattern.Replace("{0}", $iSource).Replace("{1}", $iSink)
+    }
 
-    [object] InitLoadTest($count, $sinkBase, $sinkCount) {
+    [object] InitLoadTest($count, $sinkUrlPattern, $sinkCount) {
         $name = "LoadTest"
-        if (-not $sinkBase) {
-            $sinkBase = "rtmp://slab-live.sliq.net/LoadTest"
-        }
-        $sinkBase = $sinkBase.TrimEnd("/")
-        if ($sinkCount -lt 1) {
-            $sinkCount = 1
-        }
-
+                
         $r = @()
-        1 .. $count | ForEach-Object {
-            $sourceUrl = "rtmp://localhost/Recast/TestStream$_"
+        for ($iSource = 0; $iSource -lt $count; $iSource++) {
+            $sourceUrl = "rtmp://localhost/Recast/TestStream${iSource}"
             $sinkUrls = @()
-            $sinkUrl = "$sinkBase/Stream${_}"
-            1 .. $sinkCount | ForEach-Object {
-                $sinkUrls = $sinkUrls + "${sinkUrl}_${_}"            
+            
+            for ($iSink = 0; $iSink -lt $sinkCount; $iSink++) {
+                $sinkUrls = $sinkUrls + $this._getUrl($sinkUrlPattern, $iSource+1,$iSink+1)
             }
             $r = $r + $this.AddRecast($name, $sourceUrl, $sinkUrls)
         }

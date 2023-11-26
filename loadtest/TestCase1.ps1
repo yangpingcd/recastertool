@@ -17,7 +17,7 @@ Delete the case1
 
 param(
     [int]$Count = 10,
-    [string]$SinkBase = "rtmp://slab-live.sliq.net/LoadTest",
+    [string]$SinkUrlPattern = "rtmp://slab-live.sliq.net/LoadTest/Stream{0}_{1}",
     [int]$SinkCount = 2,
     [string]$ApiBaseUrl = "http://s-app-recast-5x:5000/api/SocialRecaster", # "http://localhost:5001/api/SocialRecaster"
     [string]$DestBase = "rtmp://s-app-recast-5x:1935/Recast" #"rtmp://localhost:1935/Recast"
@@ -34,7 +34,7 @@ $ffmpeg = [FFmpegMan]::New(@{
     })
 
 function InitCase1() {
-    $man.InitLoadTest($Count, $SinkBase, $SinkCount)
+    $man.InitLoadTest($Count, $SinkUrl, $SinkCount)
 }
 
 function StartCase1() { 

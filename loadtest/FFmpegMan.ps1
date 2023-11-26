@@ -1,5 +1,6 @@
 
-class FFmpegMan {
+class FFmpegMan
+{
     [string]$Mp4 = ".\media\Media1.mp4"
     [string]$DestBase = "rtmp://s-app-recast-5x:1935/Recast"
     [string]$FFmpeg = ".\ffmpeg\ffmpeg-6.1-full_build\bin\ffmpeg.exe"
@@ -36,7 +37,7 @@ class FFmpegMan {
             $count = 1
         }
             
-        1..$count | Foreach-Object { $this.StartFfmpeg("TestStream$_") }
+        1..$count | Foreach-Object { $this.StartFFmpeg("TestStream$_") }
     }
 
     StopLoadTest() {
