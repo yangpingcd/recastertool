@@ -19,7 +19,7 @@ param(
     [int]$Count = 10,
     [int]$SinkCount = 1,
     [string]$SourceUrlPattern1 = "rtmp://localhost/Recast/TestStream{0}",
-    [string]$SinkUrlPattern1 = "rtmp://localhost:1935/Recast/TestStream{0}",
+    [string]$SinkUrlPattern1 = "rtmp://s-app-recast-5x:1935/Recast/TestStream{0}",
     [string]$SourceUrlPattern2 = "rtmp://localhost/Recast/TestStream{0}",
     [string]$SinkUrlPattern2 = "rtmp://slab-live.sliq.net/LoadTest/Stream{0}_{1}",
     [string]$ApiBaseUrl1 = "http://localhost:5000/api/SocialRecaster", # "http://localhost:5001/api/SocialRecaster",
