@@ -15,7 +15,8 @@ param(
     [string]$ApiBaseUrl = "http://s-app-recast-5x:5000/api/SocialRecaster", 
     [string]$SourceUrl = "rtmp://localhost/Recast/TestStream", 
     [string[]]$SinkUrls = @("rtmp://youtube_url", "rtmp://facebook_url"),    
-    [string]$DestBase = "rtmp://s-app-recast-5x:1935/Recast" 
+    [string]$DestBase = "rtmp://s-app-recast-5x:1935/Recast",
+    [string]$FFmpegPath = ".\ffmpeg\ffmpeg-6.1-full_build\bin\ffmpeg.exe"
 )
 
 . ./RecasterMan.ps1 
@@ -38,9 +39,10 @@ function StartYoutube() {
     $man = [RecasterMan]::New($ApiBaseUrl)
     $man.AddRecast("TestYoutube", $SourceUrl, $SinkUrls) 
 
-    $ffmpeg = [FFmpegMan]::New(@(
-        DestBase = $DestBase
-    ))
+    $ffmpeg = [FFmpegMan]::New(@{
+            DestBase   = $DestBase
+            FFmpegPath = $FFmpegPath
+        })
     $streamName = GetStreamName
     $ffmpeg.StartFFmpeg($streamName) | Out-Null
 }

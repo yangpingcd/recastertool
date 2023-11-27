@@ -25,7 +25,8 @@ param(
     [string]$SourceUrlPattern2 = "rtmp://localhost/Recast/TestStream{0}",
     [string]$SinkUrlPattern2 = "rtmp://slab-live.sliq.net/LoadTest/Stream{0}_{1}",
     [string]$ApiBaseUrl1 = "http://localhost:5000/api/SocialRecaster",
-    [string]$ApiBaseUrl2 = "http://s-app-recast-5x:5000/api/SocialRecaster"
+    [string]$ApiBaseUrl2 = "http://s-app-recast-5x:5000/api/SocialRecaster",
+    [string]$FFmpegPath = ".\ffmpeg\ffmpeg-6.1-full_build\bin\ffmpeg.exe"
 )
 
 . ./RecasterMan.ps1
@@ -44,7 +45,7 @@ $man2 = [RecasterMan]::New($ApiBaseUrl2)
 $ffmpeg = [FFmpegMan]::New(@{
         #Mp4 = ".\media\Media1.mp4"
         DestBase = "rtmp://localhost:1935/Recast"
-        #FFmpegPath = ".\ffmpeg\ffmpeg-6.1-full_build\bin\ffmpeg.exe"
+        FFmpegPath = $FFmpegPath
     })
 
 function InitCase2() {
