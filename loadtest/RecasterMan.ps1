@@ -1,10 +1,13 @@
-class RecasterMan {
+class RecasterMan
+{
     [string]$ApiBaseUrl = "http://localhost:5000/api/SocialRecaster"
 
     #$Headers = @{accept = 'text/plain' }
     $Headers = @{"Content-Type" = "application/json" }
 
-    RecasterMan([string]$api_BaseUrl) {        
+    RecasterMan() {
+    }
+    RecasterMan([string]$api_BaseUrl) {
         $this.ApiBaseUrl = $api_BaseUrl.TrimEnd('/')
     }
     
