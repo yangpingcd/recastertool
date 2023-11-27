@@ -3,7 +3,9 @@
 param(
     [int]$count = 10,
     [int]$sinkCount = 1,
+    [string]$SourceUrlPattern1 = "rtmp://localhost/Recast/TestStream{0}",
     [string]$SinkUrlPattern1 = "rtmp://localhost:1935/Recast/TestStream{0}",
+    [string]$SourceUrlPattern2 = "rtmp://localhost/Recast/TestStream{0}",
     [string]$SinkUrlPattern2 = "rtmp://slab-live.sliq.net/LoadTest/Stream{0}_{1}",
     [string]$ApiBaseUrl1 = "http://localhost:5000/api/SocialRecaster", # "http://localhost:5001/api/SocialRecaster",
     [string]$ApiBaseUrl2 = "http://s-app-recast-5x:5000/api/SocialRecaster" # "http://localhost:5001/api/SocialRecaster"
@@ -25,8 +27,8 @@ $ffmpeg = [FFmpegMan]::New(@{
     })
 
 function InitCase2() {
-    $man1.InitLoadTest(1, $SinkUrlPattern1, $count)
-    $man2.InitLoadTest($count, $SinkUrlPattern2, $sinkCount)
+    $man1.InitLoadTest(1, $SourceUrlPattern1, $SinkUrlPattern1, $count)
+    $man2.InitLoadTest($count, $SourceUrlPattern2, $SinkUrlPattern2, $sinkCount)
 }
 
 function StartCase2() {

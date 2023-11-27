@@ -1,5 +1,4 @@
-class RecasterMan
-{
+class RecasterMan {
     [string]$ApiBaseUrl = "http://localhost:5000/api/SocialRecaster"
 
     #$Headers = @{accept = 'text/plain' }
@@ -73,16 +72,16 @@ class RecasterMan
         return $pattern.Replace("{0}", $iSource).Replace("{1}", $iSink)
     }
 
-    [object] InitLoadTest($count, $sinkUrlPattern, $sinkCount) {
+    [object] InitLoadTest($count, $sourceUrlPattern, $sinkUrlPattern, $sinkCount) {
         $name = "LoadTest"
                 
         $r = @()
         for ($iSource = 0; $iSource -lt $count; $iSource++) {
-            $sourceUrl = "rtmp://localhost/Recast/TestStream${iSource}"
+            $sourceUrl = $this._getUrl($sourceUrlPattern, $iSource + 1, 1)
             $sinkUrls = @()
             
             for ($iSink = 0; $iSink -lt $sinkCount; $iSink++) {
-                $sinkUrls = $sinkUrls + $this._getUrl($sinkUrlPattern, $iSource+1,$iSink+1)
+                $sinkUrls = $sinkUrls + $this._getUrl($sinkUrlPattern, $iSource + 1, $iSink + 1)
             }
             $r = $r + $this.AddRecast($name, $sourceUrl, $sinkUrls)
         }
