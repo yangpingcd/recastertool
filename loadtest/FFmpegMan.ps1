@@ -3,7 +3,7 @@ class FFmpegMan
 {
     [string]$Mp4 = ".\media\Media1.mp4"
     [string]$DestBase = "rtmp://s-app-recast-5x:1935/Recast"
-    [string]$FFmpeg = ".\ffmpeg\ffmpeg-6.1-full_build\bin\ffmpeg.exe"
+    [string]$FFmpegPath = ".\ffmpeg\ffmpeg-6.1-full_build\bin\ffmpeg.exe"
 
     FFmpegMan() {        
     }
@@ -11,7 +11,7 @@ class FFmpegMan
         switch ($Info.Keys) {
             'Mp4' { $this.Mp4 = $Info.Mp4 }
             'DestBase' { $this.DestBase = $Info.DestBase.TrimEnd('/') }
-            'FFmpeg' { $this.FFmpeg = $Info.FFmpeg }            
+            'FFmpegPath' { $this.FFmpegPath = $Info.FFmpegPath } 
         }
     }
 
@@ -21,7 +21,7 @@ class FFmpegMan
         Write-Host "Send to $dest"
         $argList = "-stream_loop -1 -re -i `"$($this.Mp4)`" -codec copy -f flv $dest"
         #Write-Output $argList
-        return Start-Process $this.FFmpeg -ArgumentList $argList -PassThru -WindowStyle Hidden        
+        return Start-Process $this.FFmpegPath -ArgumentList $argList -PassThru -WindowStyle Hidden        
     }
         
     [object]ListFFmpeg() {
@@ -29,7 +29,7 @@ class FFmpegMan
     }
 
     [object]ListLoadTest() {
-        return Get-Process | Where-Object { ($_.name -like 'ffmpeg*') -and ($_.CommandLine -like '*TestStream*') }         
+        return Get-Process | Where-Object { ($_.name -like 'ffmpeg*') -and ($_.CommandLine -like '*TestStream*') }
     }
 
     StartLoadTest($count) {
@@ -43,6 +43,7 @@ class FFmpegMan
     StopLoadTest() {
         $list = $this.ListLoadTest()
         foreach($item in $list) {
+            Write-Host "Stopping $($item.CommandLine)"
             Stop-Process $item
         }
     }    

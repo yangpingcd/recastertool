@@ -1,10 +1,12 @@
 <#
-Load TestCase2.ps1
-  . ./TestCase2
-  or 
-  . ./TestCase2 -ApiBaseUrl1 "http://s-app-recast-5x:5000/api/SocialRecaster" -ApiBaseUrl2 = "http://s-app-recast-5x:5000/api/SocialRecaster"
+Change the TestCase2.Setting.ps1 if needed
 
-Init the case1
+Load TestCase2.ps1
+  . ./TestCase2.ps1
+  or 
+  . ./TestCase2.ps1 -ApiBaseUrl1 "http://s-app-recast-5x:5000/api/SocialRecaster" -ApiBaseUrl2 = "http://s-app-recast-5x:5000/api/SocialRecaster"
+
+Init the case2
   InitCase2
 
 Start/Stop the case2 (could run multiple times)
@@ -22,12 +24,16 @@ param(
     [string]$SinkUrlPattern1 = "rtmp://s-app-recast-5x:1935/Recast/TestStream{1}",
     [string]$SourceUrlPattern2 = "rtmp://localhost/Recast/TestStream{0}",
     [string]$SinkUrlPattern2 = "rtmp://slab-live.sliq.net/LoadTest/Stream{0}_{1}",
-    [string]$ApiBaseUrl1 = "http://localhost:5000/api/SocialRecaster", # "http://localhost:5001/api/SocialRecaster",
-    [string]$ApiBaseUrl2 = "http://s-app-recast-5x:5000/api/SocialRecaster" # "http://localhost:5001/api/SocialRecaster"
+    [string]$ApiBaseUrl1 = "http://localhost:5000/api/SocialRecaster",
+    [string]$ApiBaseUrl2 = "http://s-app-recast-5x:5000/api/SocialRecaster"
 )
 
 . ./RecasterMan.ps1
 . ./FFmpegMan.ps1
+if (Test-Path -PathType Leaf './TestCase2.Setting.ps1') {
+    . ./TestCase2.Setting.ps1
+}
+
 
 #$ApiBaseUrl1 = "http://s-app-recast-5x:5000/api/SocialRecaster"
 #$ApiBaseUrl1 = "http://localhost:5001/api/SocialRecaster"
@@ -38,7 +44,7 @@ $man2 = [RecasterMan]::New($ApiBaseUrl2)
 $ffmpeg = [FFmpegMan]::New(@{
         #Mp4 = ".\media\Media1.mp4"
         DestBase = "rtmp://localhost:1935/Recast"
-        #FFmpeg = ".\ffmpeg\ffmpeg-6.1-full_build\bin\ffmpeg.exe"
+        #FFmpegPath = ".\ffmpeg\ffmpeg-6.1-full_build\bin\ffmpeg.exe"
     })
 
 function InitCase2() {

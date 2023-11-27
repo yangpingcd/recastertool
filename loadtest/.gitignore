@@ -4,3 +4,6 @@ ffmpeg*/
 
 # bak files
 *.bak
+
+# setting files
+*.Setting.*

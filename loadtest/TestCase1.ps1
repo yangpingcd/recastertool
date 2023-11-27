@@ -1,8 +1,10 @@
 <#
+Change the TestCase1.Setting.ps1 if needed
+
 Load TestCase1.ps1
-  . ./TestCase1
+  . ./TestCase1.ps1
   or 
-  . ./TestCase1 -ApiBaseUrl "http://s-app-recast-5x:5000/api/SocialRecaster" -DestBase "rtmp://s-app-recast-5x:1935/Recast"
+  . ./TestCase1.ps1 -ApiBaseUrl "http://s-app-recast-5x:5000/api/SocialRecaster" -DestBase "rtmp://s-app-recast-5x:1935/Recast"
 
 Init the case1
   InitCase1
@@ -26,12 +28,15 @@ param(
 
 . ./RecasterMan.ps1
 . ./FFmpegMan.ps1
+if (Test-Path -PathType Leaf './TestCase1.Setting.ps1') {
+    . ./TestCase1.Setting.ps1
+}
 
 $man = [RecasterMan]::New($ApiBaseUrl)
 $ffmpeg = [FFmpegMan]::New(@{
         #Mp4 = ".\media\Media1.mp4"
         DestBase = $DestBase
-        #FFmpeg = ".\ffmpeg\ffmpeg-6.1-full_build\bin\ffmpeg.exe"
+        #FFmpegPath = ".\ffmpeg\ffmpeg-6.1-full_build\bin\ffmpeg.exe"
     })
 
 function InitCase1() {

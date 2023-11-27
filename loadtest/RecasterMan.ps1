@@ -79,12 +79,12 @@ class RecasterMan
         $name = "LoadTest"
                 
         $r = @()
-        for ($iSource = 0; $iSource -lt $count; $iSource++) {
-            $sourceUrl = $this._getUrl($sourceUrlPattern, $iSource + 1, 1)
+        for ($iSource = 1; $iSource -le $count; $iSource++) {
+            $sourceUrl = $this._getUrl($sourceUrlPattern, $iSource, 1)
             $sinkUrls = @()
             
-            for ($iSink = 0; $iSink -lt $sinkCount; $iSink++) {
-                $sinkUrls = $sinkUrls + $this._getUrl($sinkUrlPattern, $iSource + 1, $iSink + 1)
+            for ($iSink = 1; $iSink -le $sinkCount; $iSink++) {
+                $sinkUrls = $sinkUrls + $this._getUrl($sinkUrlPattern, $iSource, $iSink)
             }
             $r = $r + $this.AddRecast($name, $sourceUrl, $sinkUrls)
         }
