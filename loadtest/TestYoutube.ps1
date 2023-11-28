@@ -37,8 +37,17 @@ function GetStreamName() {
 }
 
 function StartYoutube() {
+    StopYoutube
+
     $man = [RecasterMan]::New($ApiBaseUrl)
     $man.AddRecast("TestYoutube", $SourceUrl, $SinkUrls) 
+    $list = $man.ListRecast()
+    foreach ($item in $list) {
+        if ($item.name -eq 'TestYoutube') {
+            Write-Host "Starting id=$($item.id)"
+            $man.StartRecast($item.id) | Out-Null
+        }
+    }
 
     $ffmpeg = [FFmpegMan]::New(@{
             DestBase   = $DestBase
