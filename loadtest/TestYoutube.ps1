@@ -4,7 +4,7 @@ Change the TestYoutube.Setting.ps1 if needed
 Load TestYoubute.ps1
   . ./TestYoubute.ps1
 
-Start the Youbute (could run multiple times)
+Start the Youbute
   StartYoubute
 
 Stop the Youbute
@@ -14,13 +14,14 @@ Stop the Youbute
 param(
     [string]$ApiBaseUrl = "http://s-app-recast-5x:5000/api/SocialRecaster", 
     [string]$SourceUrl = "rtmp://localhost/Recast/TestStream", 
-    [string[]]$SinkUrls = @("rtmp://youtube_url", "rtmp://facebook_url"),    
+    [string[]]$SinkUrls = @("rtmp://youtube_url", "rtmp://facebook_url"),
+    
     [string]$DestBase = "rtmp://s-app-recast-5x:1935/Recast",
     [string]$FFmpegPath = ".\ffmpeg\ffmpeg-6.1-full_build\bin\ffmpeg.exe"
 )
 
-. ./RecasterMan.ps1 
-. ./FFmpegMan.ps1
+. ./lib/RecasterMan.ps1 
+. ./lib/FFmpegMan.ps1
 if (Test-Path -PathType Leaf './TestYoutube.Setting.ps1') {
     . ./TestYoutube.Setting.ps1
 }
@@ -44,7 +45,8 @@ function StartYoutube() {
             FFmpegPath = $FFmpegPath
         })
     $streamName = GetStreamName
-    $ffmpeg.StartFFmpeg($streamName) | Out-Null
+    $ps = $ffmpeg.StartFFmpeg($streamName)
+    Write-Host "Started $($ps.CommandLine)"
 }
 
 function StopYoutube() {
@@ -52,7 +54,7 @@ function StopYoutube() {
     $list = $man.ListRecast()
     foreach ($item in $list) {
         if ($item.name -eq 'TestYoutube') {
-            Write-Host "Deleting $($item.id)"
+            Write-Host "Deleting id=$($item.id)"
             $man.DeleteRecast($item.id) | Out-Null
         }
     }

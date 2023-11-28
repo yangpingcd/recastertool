@@ -27,8 +27,8 @@ param(
     [string]$FFmpegPath = ".\ffmpeg\ffmpeg-6.1-full_build\bin\ffmpeg.exe"
 )
 
-. ./RecasterMan.ps1
-. ./FFmpegMan.ps1
+. ./lib/RecasterMan.ps1
+. ./lib/FFmpegMan.ps1
 if (Test-Path -PathType Leaf './TestCase1.Setting.ps1') {
     . ./TestCase1.Setting.ps1
 }
