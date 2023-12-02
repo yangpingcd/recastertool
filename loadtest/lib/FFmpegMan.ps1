@@ -3,9 +3,10 @@ class FFmpegMan
 {
     [string]$Mp4 = ".\media\Media1.mp4"
     [string]$DestBase = "rtmp://s-app-recast-5x:1935/Recast"
-    [string]$FFmpegPath = ".\ffmpeg\ffmpeg-6.1-full_build\bin\ffmpeg.exe"
+    [string]$OutputPattern = "rtmp://s-app-recast-5x:1935/Recast/TestStream{0}"
+    [string]$FFmpegPath = "ffmpeg.exe"
 
-    FFmpegMan() {        
+    FFmpegMan() {
     }
     FFmpegMan([hashtable]$Info) {
         switch ($Info.Keys) {
@@ -13,6 +14,11 @@ class FFmpegMan
             'DestBase' { $this.DestBase = $Info.DestBase.TrimEnd('/') }
             'FFmpegPath' { $this.FFmpegPath = $Info.FFmpegPath } 
         }
+    }
+
+    [object]_getOutputWildcard() {
+        $output = $this.outputPattern.TrimEnd('/').TrimEnd('\')
+        return $output.Replace('{0}', '*')
     }
 
     [object] StartFFmpeg($streamName) {

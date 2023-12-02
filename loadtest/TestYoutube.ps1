@@ -17,7 +17,7 @@ param(
     [string[]]$SinkUrls = @("rtmp://youtube_url", "rtmp://facebook_url"),
     
     [string]$DestBase = "rtmp://s-app-recast-5x:1935/Recast",
-    [string]$FFmpegPath = ".\ffmpeg\ffmpeg-6.1-full_build\bin\ffmpeg.exe"
+    [string]$FFmpegPath = "ffmpeg.exe"
 )
 
 . ./lib/RecasterMan.ps1 
