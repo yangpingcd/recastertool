@@ -1,6 +1,5 @@
 
-class FFmpegMan
-{
+class FFmpegMan {
     [string]$Mp4 = ".\media\Media1.mp4"
     [string]$OutputPattern = "rtmp://s-app-recast-5x:1935/Recast/TestStream{0}"
     [string]$FFmpegPath = "ffmpeg.exe"
@@ -37,7 +36,7 @@ class FFmpegMan
     }
 
     [object]ListLoadTest() {
-        $outputWildcard=_getOutputWildcard()
+        $outputWildcard = $this._getOutputWildcard()
         return Get-Process | Where-Object { ($_.name -like 'ffmpeg*') -and ($_.CommandLine -like $outputWildcard) }
     }
 
@@ -54,7 +53,7 @@ class FFmpegMan
 
     StopLoadTest() {
         $list = $this.ListLoadTest()
-        foreach($item in $list) {
+        foreach ($item in $list) {
             Write-Host "Stopping $($item.CommandLine)"
             Stop-Process $item
         }
