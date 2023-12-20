@@ -17,6 +17,7 @@ Delete the case1
   DeleteCase1
 #>
 
+#Requires -Version 7.0
 param(
     [int]$Count = 10,
     [string]$SourceUrlPattern = "rtmp://localhost/Recast/TestStream{0}",

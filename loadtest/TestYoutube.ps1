@@ -11,6 +11,7 @@ Stop the Youbute
   StopYoubute
 #>
 
+#Requires -Version 7.0
 param(
     [string]$ApiBaseUrl = "http://s-app-recast-5x:5000/api/SocialRecaster", 
     [string]$SourceUrl = "rtmp://localhost/Recast/TestStream", 

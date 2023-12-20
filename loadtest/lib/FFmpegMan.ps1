@@ -37,7 +37,7 @@ class FFmpegMan {
 
     [object]ListLoadTest() {
         $outputWildcard = $this._getOutputWildcard()
-        return Get-Process | Where-Object { ($_.name -like 'ffmpeg*') -and ($_.CommandLine -like $outputWildcard) }
+        return Get-Process | Where-Object { ($_.name -like 'ffmpeg*') -and ($_.CommandLine -like "*$outputWildcard*") }
     }
 
     StartLoadTest($count) {

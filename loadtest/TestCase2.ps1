@@ -17,6 +17,7 @@ Delete the case2
   DeleteCase2
 #>
 
+#Requires -Version 7.0
 param(
     [int]$Count = 50,
     [int]$SinkCount = 1,
