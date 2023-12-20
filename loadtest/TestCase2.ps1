@@ -43,19 +43,22 @@ if (Test-Path -PathType Leaf './TestCase2.Setting.ps1') {
 $man1 = [RecasterMan]::New($ApiBaseUrl1)
 $man2 = [RecasterMan]::New($ApiBaseUrl2)
 $ffmpeg = [FFmpegMan]::New(@{
-        #Mp4 = ".\media\Media1.mp4"
-        #DestBase = "rtmp://localhost:1935/Recast"
+        #Mp4 = ".\media\Media1.mp4"        
         OutputPattern = $SourceUrlPattern1
         FFmpegPath = $FFmpegPath
     })
 
 function InitCase2() {
+    Write-Host "Init the source SocialRecaster ($ApiBaseUrl1)"
     $man1.InitLoadTest(1, $SourceUrlPattern1, $SinkUrlPattern1, $Count)
+    Write-Host "Init the target SocialRecaster ($ApiBaseUrl2)"
     $man2.InitLoadTest($Count, $SourceUrlPattern2, $SinkUrlPattern2, $SinkCount)
 }
 
 function StartCase2() {
+    Write-Host "Starting the source SocialRecaster ($ApiBaseUrl1)"
     $man1.StartLoadTest()
+    Write-Host "Starting the target SocialRecaster ($ApiBaseUrl2)"
     $man2.StartLoadTest()
  
     $ffmpeg.StopLoadTest()
@@ -63,14 +66,18 @@ function StartCase2() {
 }
 
 function StopCase2() {
+    Write-Host "Stopping the source SocialRecaster ($ApiBaseUrl1)"
     $man1.StopLoadTest()
+    Write-Host "Stopping the target SocialRecaster ($ApiBaseUrl2)"
     $man2.StopLoadTest()
 
     $ffmpeg.StopLoadTest()
 }
 
 function DeleteCase2() {
+    Write-Host "Delete the source SocialRecaster ($ApiBaseUrl1)"
     $man1.DeleteLoadTest()
+    Write-Host "Delete the target SocialRecaster ($ApiBaseUrl2)"
     $man2.DeleteLoadTest()
 
     $ffmpeg.StopLoadTest()

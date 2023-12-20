@@ -36,7 +36,7 @@ if (Test-Path -PathType Leaf './TestCase1.Setting.ps1') {
 $man = [RecasterMan]::New($ApiBaseUrl)
 $ffmpeg = [FFmpegMan]::New(@{
         #Mp4 = ".\media\Media1.mp4"
-        DestBase = $DestBase
+        OutputPattern = $SourceUrlPattern
         FFmpegPath = $FFmpegPath
     })
 
