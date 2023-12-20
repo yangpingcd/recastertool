@@ -44,7 +44,8 @@ $man1 = [RecasterMan]::New($ApiBaseUrl1)
 $man2 = [RecasterMan]::New($ApiBaseUrl2)
 $ffmpeg = [FFmpegMan]::New(@{
         #Mp4 = ".\media\Media1.mp4"
-        DestBase = "rtmp://localhost:1935/Recast"
+        #DestBase = "rtmp://localhost:1935/Recast"
+        OutputPattern = $SourceUrlPattern1
         FFmpegPath = $FFmpegPath
     })
 

@@ -2,7 +2,6 @@
 class FFmpegMan
 {
     [string]$Mp4 = ".\media\Media1.mp4"
-    [string]$DestBase = "rtmp://s-app-recast-5x:1935/Recast"
     [string]$OutputPattern = "rtmp://s-app-recast-5x:1935/Recast/TestStream{0}"
     [string]$FFmpegPath = "ffmpeg.exe"
 
@@ -11,21 +10,24 @@ class FFmpegMan
     FFmpegMan([hashtable]$Info) {
         switch ($Info.Keys) {
             'Mp4' { $this.Mp4 = $Info.Mp4 }
-            'DestBase' { $this.DestBase = $Info.DestBase.TrimEnd('/') }
+            #'DestBase' { $this.DestBase = $Info.DestBase.TrimEnd('/') }
+            'OutputPattern' { $this.OutputPattern = $info.OutputPattern }
             'FFmpegPath' { $this.FFmpegPath = $Info.FFmpegPath } 
         }
     }
 
-    [object]_getOutputWildcard() {
-        $output = $this.outputPattern.TrimEnd('/').TrimEnd('\')
-        return $output.Replace('{0}', '*')
+    [string]_getOutput($index) {
+        $output = $this.OutputPattern.TrimEnd('/').TrimEnd('\')
+        return $output.Replace("{0}", $index)
     }
+    [object]_getOutputWildcard() {
+        $output = $this.OutputPattern.TrimEnd('/').TrimEnd('\')
+        return $output.Replace('{0}', '*')
+    }    
 
-    [object] StartFFmpeg($streamName) {
-        $dest = $this.DestBase + "/$streamName"
-    
-        Write-Host "Send to $dest"
-        $argList = "-stream_loop -1 -re -i `"$($this.Mp4)`" -codec copy -f flv $dest"
+    [object] StartFFmpeg($output) {        
+        Write-Host "Send to $output"
+        $argList = "-stream_loop -1 -re -i `"$($this.Mp4)`" -codec copy -f flv $output"
         #Write-Output $argList
         return Start-Process $this.FFmpegPath -ArgumentList $argList -PassThru -WindowStyle Hidden        
     }
@@ -35,7 +37,8 @@ class FFmpegMan
     }
 
     [object]ListLoadTest() {
-        return Get-Process | Where-Object { ($_.name -like 'ffmpeg*') -and ($_.CommandLine -like '*TestStream*') }
+        $outputWildcard=_getOutputWildcard()
+        return Get-Process | Where-Object { ($_.name -like 'ffmpeg*') -and ($_.CommandLine -like $outputWildcard) }
     }
 
     StartLoadTest($count) {
@@ -43,7 +46,10 @@ class FFmpegMan
             $count = 1
         }
             
-        1..$count | Foreach-Object { $this.StartFFmpeg("TestStream$_") }
+        1..$count | Foreach-Object { 
+            $output = $this._getOutput($_)
+            $this.StartFFmpeg($output)
+        }
     }
 
     StopLoadTest() {
