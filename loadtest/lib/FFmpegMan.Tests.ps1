@@ -1,3 +1,5 @@
+# https://pester.dev/docs/quick-start
+
 param(
     $Mp4 = ".\media\Media1.mp4",
     #[string]$DestBase = "rtmp://s-app-recast-5x:1935/Recast"
@@ -5,13 +7,27 @@ param(
     $FFmpegPath = "ffmpeg.exe"
 )
 
-. $PSScriptRoot/FFmpegMan.ps1
-$settingPath = "$PSScriptRoot/FFmpegMan.Tests.Setting.ps1"
-if (Test-Path -PathType Leaf $settingPath) {
-    . $settingPath
+BeforeAll {
+    . $PSScriptRoot/FFmpegMan.ps1
+    $settingPath = "$PSScriptRoot/FFmpegMan.Tests.Setting.ps1"
+    if (Test-Path -PathType Leaf $settingPath) {
+        . $settingPath
+    }
+    Remove-Variable -Name settingPath
 }
-Remove-Variable -Name settingPath
 
+Describe 'TestPattern' {
+    It 'Pattern should be replaced' {
+        $pattern = "rtmp://s-app-recast-5x:1935/Recast/TestStream{0}"
+        $ffmpeg = [FFmpegMan]::New(@{
+                $OutputPattern = $pattern
+            })
+
+        $result = $ffmpeg._getOutputWildcard()
+        #$true | Should -Be $true
+        $result | Should -Be "rtmp://s-app-recast-5x:1935/Recast/TestStream*"
+    }
+}
 
 function TestPattern() {
     $ffmpeg = [FFmpegMan]::New(@{
@@ -20,7 +36,7 @@ function TestPattern() {
 
     $ffmpeg._getOutputWildcard()
 }
-TestPattern
+
 
 function TestFFmpegMan() {
     $ffmpeg = [FFmpegMan]::New()
