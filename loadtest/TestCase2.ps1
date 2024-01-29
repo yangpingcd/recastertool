@@ -2,9 +2,7 @@
 Change the TestCase2.Setting.ps1 if needed
 
 Load TestCase2.ps1
-  . ./TestCase2.ps1
-  or 
-  . ./TestCase2.ps1 -ApiBaseUrl1 "http://s-app-recast-5x:5000/api/SocialRecaster" -ApiBaseUrl2 = "http://s-app-recast-5x:5000/api/SocialRecaster"
+  . ./TestCase2.ps1  
 
 Init the case2
   InitCase2
@@ -27,15 +25,19 @@ param(
     [string]$SinkUrlPattern2 = "rtmp://slab-live.sliq.net/LoadTest/Stream{0}_{1}",
     [string]$ApiBaseUrl1 = "http://localhost:5000/api/SocialRecaster",
     [string]$ApiBaseUrl2 = "http://s-app-recast-5x:5000/api/SocialRecaster",
-    [string]$FFmpegPath = ".\ffmpeg\ffmpeg-6.1-full_build\bin\ffmpeg.exe"
+    [string]$FFmpegPath = ".\ffmpeg\ffmpeg-6.1-full_build\bin\ffmpeg.exe",
+    [string]$Mp4 = ".\media\Media1.mp4"
 )
 
-. ./lib/RecasterMan.ps1
-. ./lib/FFmpegMan.ps1
-if (Test-Path -PathType Leaf './TestCase2.Setting.ps1') {
-    . ./TestCase2.Setting.ps1
+. $PSScriptRoot/lib/RecasterMan.ps1
+. $PSScriptRoot/lib/FFmpegMan.ps1
+. {
+    $settingPath = "$PSScriptRoot/TestCase2.Setting.ps1"
+    if (Test-Path -PathType Leaf $settingPath ) {
+        . $settingPath 
+    }
+    Remove-Variable settingPath
 }
-
 
 #$ApiBaseUrl1 = "http://s-app-recast-5x:5000/api/SocialRecaster"
 #$ApiBaseUrl1 = "http://localhost:5001/api/SocialRecaster"
@@ -44,9 +46,9 @@ if (Test-Path -PathType Leaf './TestCase2.Setting.ps1') {
 $man1 = [RecasterMan]::New($ApiBaseUrl1)
 $man2 = [RecasterMan]::New($ApiBaseUrl2)
 $ffmpeg = [FFmpegMan]::New(@{
-        #Mp4 = ".\media\Media1.mp4"        
         OutputPattern = $SourceUrlPattern1
-        FFmpegPath = $FFmpegPath
+        FFmpegPath    = $FFmpegPath
+        Mp4           = $Mp4
     })
 
 function InitCase2() {
