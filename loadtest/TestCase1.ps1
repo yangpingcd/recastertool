@@ -22,6 +22,7 @@ param(
     [string]$SinkUrlPattern = "rtmp://slab-live.sliq.net/LoadTest/Stream{0}_{1}",
     [int]$SinkCount = 2,
     [string]$ApiBaseUrl = "http://s-app-recast-5x:5000/api/SocialRecaster",
+    [string]$FFmpegOutputPattern = "rtmp://localhost/Recast/TestStream{0}",
     [string]$FFmpegPath = ".\ffmpeg\ffmpeg-6.1-full_build\bin\ffmpeg.exe",
     [string]$Mp4 = ".\media\Media1.mp4"
 )
@@ -38,7 +39,7 @@ param(
 
 $man = [RecasterMan]::New($ApiBaseUrl)
 $ffmpeg = [FFmpegMan]::New(@{
-        OutputPattern = $SourceUrlPattern
+        OutputPattern = $FFmpegOutputPattern
         FFmpegPath    = $FFmpegPath
         Mp4           = $Mp4
     })
