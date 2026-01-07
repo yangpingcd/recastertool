@@ -99,7 +99,9 @@
                         $('#sinkUrl3').val('');
                     }
 
-                    $('#enabled').val(data.enabled)
+                    $('#duration').val(data.duration);
+
+                    $('#enabled').val(data.enabled);
                 },
                 error: function (xhr, desc, err) {
                     console.log(desc);
@@ -146,6 +148,14 @@
                         requestData.sinks[2] = { "name": name3, "url": url3 };
                     }
                 }
+            }
+
+            let durationText = $('#duration').val();
+            let duration = parseInt(durationText);
+            if (duration) {
+                requestData.duration = duration;
+            } else {
+                requestData.duration = null;
             }
 
             $.ajax({
@@ -290,6 +300,12 @@
         <div class="row">
             <div class="col-2"> <label>Sink URL 3</label></div>
             <div class="col-10"><input type="text" class="form-control" id="sinkUrl3" placeholder=""></div>
+        </div>
+        <hr>
+
+        <div class="row">
+            <div class="col-2"> <label>Duration</label></div>
+            <div class="col-10"><input type="text" class="form-control" id="duration" placeholder=""></div>
         </div>
         <hr>
 
